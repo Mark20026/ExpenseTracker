@@ -28,6 +28,7 @@ const Signup = () => {
 
         <form onSubmit={handleSignUp}>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               value={fullName}
@@ -53,6 +54,19 @@ const Signup = () => {
               />
             </div>
           </div>
+
+          {error && <p className="text-red-500">{error}</p>}
+
+          <button type="submit" className="btn-primary">
+            Sign Up
+          </button>
+
+          <p className="text-[13px] text-slate-800 mt-3">
+            Already have an account?{" "}
+            <Link className="font-medium text-primary underline" to="/login">
+              Login
+            </Link>
+          </p>
         </form>
       </div>
     </AuthLayout>
