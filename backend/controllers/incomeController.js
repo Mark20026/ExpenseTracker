@@ -4,6 +4,7 @@ const xlsx = require("xlsx");
 
 //Add Income Source
 exports.addIncome = async (req, res) => {
+  const userId = req.user.id;
   try {
     const { icon, source, amount, date } = req.body;
 
@@ -17,7 +18,7 @@ exports.addIncome = async (req, res) => {
       icon,
       source,
       amount,
-      date: new Date(Date),
+      date: new Date(date),
     });
 
     await newIncome.save();

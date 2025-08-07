@@ -24,6 +24,11 @@ exports.getDashboardData = async (req, res) => {
       { $group: { _id: null, total: { $sum: "$amount" } } },
     ]);
 
+    console.log("totalExpense", {
+      totalExpense,
+      userId: isValidObjectId(userId),
+    });
+
     //Get income transaction in the last 60 days
     const last60DaysIncomeTransactions = await Income.find({
       userId,
