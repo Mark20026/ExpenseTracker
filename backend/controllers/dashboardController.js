@@ -41,6 +41,11 @@ exports.getDashboardData = async (req, res) => {
       0
     );
 
+    console.log("last60DaysIncomeTransactions", {
+      incomeLast60Days,
+      userId: isValidObjectId(userId),
+    });
+
     //Get expense transaction in the last 30 days
     const last30DaysExpenseTransactions = await Expense.find({
       userId,
