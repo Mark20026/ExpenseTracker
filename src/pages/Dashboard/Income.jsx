@@ -6,8 +6,13 @@ import { API_PATHS } from "../../utils/apiPaths.js";
 import Modal from "../../components/Modal";
 import AddIncomeForm from "../../components/Income/AddIncomeForm";
 import toast from "react-hot-toast";
+import IncomeList from "../../components/Income/IncomeList";
+import { useUserAuth } from "../../hooks/useUserAuth";
+import DeleteAlert from "../../components/DeleteAlert";
 
 const Income = () => {
+  useUserAuth();
+
   const [incomeData, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -95,12 +100,31 @@ const Income = () => {
           </div>
         </div>
 
+        <IncomeList
+          transactions={incomeData}
+          onDelete={(id) => {
+            setOpenDeleteAlert({ show: true, data: id });
+          }}
+          onDownload={handleDeleteDownloadIncomeDetails}
+        />
+
         <Modal
           isOpen={openAddIncomeModal}
           onClose={() => setOpenAddIncomeModal(false)}
           title="Add Income"
         >
           <AddIncomeForm onAddIncome={handleAddIncome} />
+        </Modal>
+
+        <Modal
+          isOpen={openDeleteAlert.show}
+          onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+          title="Delete Income"
+        >
+          <DeleteAlert
+            content="Are you sure youu want to delete this income detail?"
+            onDelete={() => deleteIncome(openDeleteAlert.data)}
+          />
         </Modal>
       </div>
     </DashboardLayout>
